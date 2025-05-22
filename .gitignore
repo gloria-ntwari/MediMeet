@@ -1,0 +1,49 @@
+# Node.js dependencies
+**/node_modules/
+
+# Build output
+**/dist/
+**/build/
+**/target/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Java specific
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+target/
+.idea/
+*.iml
+.vscode/
+
+# Spring Boot
+spring-boot-starter/
+*.properties
+!src/main/resources/application.properties
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd 
