@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .image-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        img {
+            max-width: 300px;
+            max-height: 300px;
+            display: block;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Image Test Page</h1>
+
+    <div class="image-container">
+        <h2>Doctor Placeholder</h2>
+        <img src="/doctor-placeholder.jpg" alt="Doctor Placeholder">
+        <p>Path: /doctor-placeholder.jpg</p>
+    </div>
+
+    <div class="image-container">
+        <h2>Doctor 1</h2>
+        <img src="/doctor-1.jpg" alt="Doctor 1">
+        <p>Path: /doctor-1.jpg</p>
+    </div>
+
+    <div class="image-container">
+        <h2>Test Image 1</h2>
+        <img src="/images/838d6379-f72d-4099-86a5-e531f73c8311.png" alt="Test Image 1">
+        <p>Path: /images/838d6379-f72d-4099-86a5-e531f73c8311.png</p>
+    </div>
+
+    <div class="image-container">
+        <h2>Test Image 2</h2>
+        <img src="/images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png" alt="Test Image 2">
+        <p>Path: /images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png</p>
+    </div>
+
+    <div class="image-container">
+        <h2>Absolute URLs Test</h2>
+        <img id="absoluteUrl1" alt="Absolute URL 1">
+        <p id="absolutePath1"></p>
+    </div>
+
+    <script>
+        // Set up absolute URLs based on the current origin
+        const baseUrl = window.location.origin;
+
+        const absoluteUrl1 = `${baseUrl}/images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png`;
+        document.getElementById('absoluteUrl1').src = absoluteUrl1;
+        document.getElementById('absolutePath1').textContent = `Path: ${absoluteUrl1}`;
+
+        // Check if images can be loaded
+        function checkImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(`Image loaded: ${url}`);
+                img.onerror = () => reject(`Failed to load: ${url}`);
+                img.src = url;
+            });
+        }
+
+        // Test images and log results
+        async function testImages() {
+            const images = [
+                '/doctor-placeholder.jpg',
+                '/doctor-1.jpg',
+                '/images/838d6379-f72d-4099-86a5-e531f73c8311.png',
+                '/images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png',
+                absoluteUrl1
+            ];
+
+            for (const img of images) {
+                try {
+                    const result = await checkImage(img);
+                    console.log(result);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+
+        // Run tests when page loads
+        window.onload = testImages;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+    "login": {
+        "title": "Injira",
+        "email": "Imeyili",
+        "password": "Ijambo ry'ibanga",
+        "button": "Injira",
+        "forgot": "Wibagiwe ijambo ry'ibanga?"
+    },
+    "register": {
+        "title": "Iyandikishe",
+        "name": "Amazina yose",
+        "email": "Imeyili",
+        "password": "Ijambo ry'ibanga",
+        "button": "Iyandikishe"
+    },
+    "dashboard": {
+        "welcome": "Murakaza neza, {{name}}!"
+    }
+}

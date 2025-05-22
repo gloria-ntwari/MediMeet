@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Image Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .test-group {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .image-test {
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 10px;
+        }
+
+        img {
+            max-height: 150px;
+            border: 1px solid #eee;
+            margin: 5px 0;
+            display: block;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Direct Image Test</h1>
+    <p>This page tests various ways of loading doctor images to diagnose the correct path format.</p>
+
+    <div class="test-group">
+        <h2>Test 1: Doctor Files - Direct Path</h2>
+
+        <div class="image-test">
+            <p>Image with path: <code>doctor-1.jpg</code></p>
+            <img src="doctor-1.jpg" alt="Doctor 1" id="test1a">
+            <div id="result1a"></div>
+        </div>
+
+        <div class="image-test">
+            <p>Image with path: <code>doctor-2.jpg</code></p>
+            <img src="doctor-2.jpg" alt="Doctor 2" id="test1b">
+            <div id="result1b"></div>
+        </div>
+    </div>
+
+    <div class="test-group">
+        <h2>Test 2: Doctor Files - With Leading Slash</h2>
+
+        <div class="image-test">
+            <p>Image with path: <code>/doctor-1.jpg</code></p>
+            <img src="/doctor-1.jpg" alt="Doctor 1" id="test2a">
+            <div id="result2a"></div>
+        </div>
+
+        <div class="image-test">
+            <p>Image with path: <code>/doctor-2.jpg</code></p>
+            <img src="/doctor-2.jpg" alt="Doctor 2" id="test2b">
+            <div id="result2b"></div>
+        </div>
+    </div>
+
+    <div class="test-group">
+        <h2>Test 3: Images Folder - Direct Path</h2>
+
+        <div class="image-test">
+            <p>Image with path: <code>images/838d6379-f72d-4099-86a5-e531f73c8311.png</code></p>
+            <img src="images/838d6379-f72d-4099-86a5-e531f73c8311.png" alt="Doctor Faith" id="test3a">
+            <div id="result3a"></div>
+        </div>
+
+        <div class="image-test">
+            <p>Image with path: <code>images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png</code></p>
+            <img src="images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png" alt="Doctor Ivan" id="test3b">
+            <div id="result3b"></div>
+        </div>
+    </div>
+
+    <div class="test-group">
+        <h2>Test 4: Images Folder - With Leading Slash</h2>
+
+        <div class="image-test">
+            <p>Image with path: <code>/images/838d6379-f72d-4099-86a5-e531f73c8311.png</code></p>
+            <img src="/images/838d6379-f72d-4099-86a5-e531f73c8311.png" alt="Doctor Faith" id="test4a">
+            <div id="result4a"></div>
+        </div>
+
+        <div class="image-test">
+            <p>Image with path: <code>/images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png</code></p>
+            <img src="/images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png" alt="Doctor Ivan" id="test4b">
+            <div id="result4b"></div>
+        </div>
+    </div>
+
+    <div id="summary" class="test-group">
+        <h2>Test Results Summary</h2>
+        <div id="summaryResults"></div>
+    </div>
+
+    <script>
+        // Check all images on page load
+        window.onload = function () {
+            // Track which paths work
+            const results = {};
+
+            // Get all img elements
+            const images = document.querySelectorAll('img');
+
+            // Add load and error handlers to each image
+            images.forEach(img => {
+                const id = img.id;
+                const resultElement = document.getElementById('result' + id.slice(4));
+
+                img.onload = function () {
+                    resultElement.innerHTML = '<span class="success">✓ Image loaded successfully!</span>';
+                    results[img.src] = true;
+                    updateSummary();
+                };
+
+                img.onerror = function () {
+                    resultElement.innerHTML = '<span class="error">✗ Image failed to load!</span>';
+                    results[img.src] = false;
+                    updateSummary();
+                };
+            });
+
+            // Update the summary section
+            function updateSummary() {
+                const summaryElement = document.getElementById('summaryResults');
+                let summary = '<ul>';
+
+                for (const [path, success] of Object.entries(results)) {
+                    const relativePath = path.includes(window.location.origin)
+                        ? path.replace(window.location.origin, '')
+                        : path;
+
+                    summary += `<li><code>${relativePath}</code>: 
+                        <span class="${success ? 'success' : 'error'}">${success ? 'Works' : 'Fails'}</span>
+                    </li>`;
+                }
+
+                summary += '</ul>';
+
+                // Add recommendations based on results
+                summary += '<h3>Recommendation:</h3><p>';
+
+                const directImagesWorks = results['images/838d6379-f72d-4099-86a5-e531f73c8311.png'] ||
+                    results['images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png'];
+
+                const slashImagesWorks = results['/images/838d6379-f72d-4099-86a5-e531f73c8311.png'] ||
+                    results['/images/841cf6f2-9e8e-40c8-8782-30f15ff668c9.png'];
+
+                if (directImagesWorks) {
+                    summary += 'Use paths without leading slashes: <code>images/filename.png</code>';
+                } else if (slashImagesWorks) {
+                    summary += 'Use paths with leading slashes: <code>/images/filename.png</code>';
+                } else {
+                    summary += 'Neither path format works for images. Check file permissions and that files exist.';
+                }
+
+                summary += '</p>';
+
+                summaryElement.innerHTML = summary;
+            }
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login",
+    "forgot": "Forgot Password?"
+  },
+  "register": {
+    "title": "Register",
+    "name": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "button": "Register"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{name}}!"
+  }
+} 
